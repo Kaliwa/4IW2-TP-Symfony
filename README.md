@@ -1,51 +1,46 @@
-# Symfony Docker
+TP Noté Symfony
+Objectif :
+Créer un projet Symfony avec un thème donné et des features à implémenter pour valider le TP. Le but est de montrer que vous avez compris les bases de Symfony et que vous êtes capable de créer un projet complet avec des features de base.
 
-A [Docker](https://www.docker.com/)-based installer and runtime for the [Symfony](https://symfony.com) web framework,
-with [FrankenPHP](https://frankenphp.dev) and [Caddy](https://caddyserver.com/) inside!
+Pas besoin que le site soit une oeuvre d'art, par contre il faut que ce soit un minimum présentable et que ça fonctionne.
 
-![CI](https://github.com/dunglas/symfony-docker/workflows/CI/badge.svg)
+TP :
+8 - Exercices -> Matières, Chapitres, Exercices, Commentaires
+Vous devez travailler sur le thème imposé. Si vous ne respectez pas le thème, ce sera 0.
 
-## Getting Started
+Features à faire sur les projets :
+Créer les entités et faire les relations (minimum 4 entités)
+Créer des fixtures (PHP ou YAML)
+Faire l'authentification
+login
+mdp oublié, reset mdp
+Avoir 3 roles différents (ADMIN, USER, BANNED)
+Afficher du contenu dynamiquement en fonction de si l'utilisateur est connecté ou non
+Si connecté, afficher son nom et prénom
+Si non connecté, afficher un bouton pour se connecter
+Si connecté, afficher un bouton pour se déconnecter
+Afficher du contenu dynamiquement en fonction de si l'utilisateur à certains roles ou non
+Si ADMIN, afficher un bouton pour accéder à l'admin
+Si USER, afficher un bouton pour accéder à son profil
+Si BANNED, afficher un message pour dire qu'il est banni et ne pas lui afficher les pages
+Faire les pages pour lire/créer/modifier/supprimer les différentes entités
+Pensez à sécuriser les formulaires et les routes
 
-1. If not already done, [install Docker Compose](https://docs.docker.com/compose/install/) (v2.10+)
-2. Run `docker compose build --no-cache` to build fresh images
-3. Run `docker compose up --pull always -d --wait` to set up and start a fresh Symfony project
-4. Open `https://localhost` in your favorite web browser and [accept the auto-generated TLS certificate](https://stackoverflow.com/a/15076602/1352334)
-5. Run `docker compose down --remove-orphans` to stop the Docker containers.
+Autre infos
+Toute chose qui n'est pas demandé fera des points en +
 
-## Features
+Plus d'entités = Pts en +
+Feature pas demandé = Pts en +
+Techno en + = Pts en +
+etc ...
+Pour les plus déters :
+Exemples de features avancées pour taper le 21/20 :
 
-* Production, development and CI ready
-* Just 1 service by default
-* Blazing-fast performance thanks to [the worker mode of FrankenPHP](https://github.com/dunglas/frankenphp/blob/main/docs/worker.md) (automatically enabled in prod mode)
-* [Installation of extra Docker Compose services](docs/extra-services.md) with Symfony Flex
-* Automatic HTTPS (in dev and prod)
-* HTTP/3 and [Early Hints](https://symfony.com/blog/new-in-symfony-6-3-early-hints) support
-* Real-time messaging thanks to a built-in [Mercure hub](https://symfony.com/doc/current/mercure.html)
-* [Vulcain](https://vulcain.rocks) support
-* Native [XDebug](docs/xdebug.md) integration
-* Super-readable configuration
-
-**Enjoy!**
-
-## Docs
-
-1. [Options available](docs/options.md)
-2. [Using Symfony Docker with an existing project](docs/existing-project.md)
-3. [Support for extra services](docs/extra-services.md)
-4. [Deploying in production](docs/production.md)
-5. [Debugging with Xdebug](docs/xdebug.md)
-6. [TLS Certificates](docs/tls.md)
-7. [Using MySQL instead of PostgreSQL](docs/mysql.md)
-8. [Using Alpine Linux instead of Debian](docs/alpine.md)
-9. [Using a Makefile](docs/makefile.md)
-10. [Updating the template](docs/updating.md)
-11. [Troubleshooting](docs/troubleshooting.md)
-
-## License
-
-Symfony Docker is available under the MIT License.
-
-## Credits
-
-Created by [Kévin Dunglas](https://dunglas.dev), co-maintained by [Maxime Helias](https://twitter.com/maxhelias) and sponsored by [Les-Tilleuls.coop](https://les-tilleuls.coop).
+Brancher une API SMS
+Brancher une API de paiement
+Faire un système de recherche
+Faire un système de filtres
+Brancher ChatGPT pour simplfier la rédaction de contenu pour vos entités
+Faire un système de notifications
+Faire du temps réel avec Mercure
+Faire de l'async avec RabbitMQ
