@@ -21,11 +21,11 @@ class Comment
     private ?\DateTimeInterface $createdAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'comments')]
-    #[ORM\JoinColumn(nullable: false)]
+    
     private ?User $userID = null;
 
     #[ORM\ManyToOne(inversedBy: 'comments')]
-    #[ORM\JoinColumn(nullable: false)]
+    
     private ?Exercise $exerciseID = null;
 
     public function getId(): ?int

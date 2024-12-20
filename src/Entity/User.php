@@ -32,7 +32,7 @@ class User
     private array $roles = [];
 
     #[ORM\ManyToOne(inversedBy: 'users')]
-    #[ORM\JoinColumn(nullable: false)]
+    
     private ?Classroom $classeID = null;
 
     /**

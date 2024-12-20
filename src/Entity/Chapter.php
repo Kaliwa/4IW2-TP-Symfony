@@ -23,7 +23,7 @@ class Chapter
     private ?string $description = null;
 
     #[ORM\ManyToOne(inversedBy: 'chapters')]
-    #[ORM\JoinColumn(nullable: false)]
+    
     private ?Subject $subjectID = null;
 
     /**

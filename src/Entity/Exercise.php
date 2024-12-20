@@ -23,7 +23,7 @@ class Exercise
     private ?string $response = null;
 
     #[ORM\ManyToOne(inversedBy: 'exercises')]
-    #[ORM\JoinColumn(nullable: false)]
+    
     private ?Chapter $chapterID = null;
 
     /**
