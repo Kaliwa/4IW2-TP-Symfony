@@ -22,21 +22,21 @@ class Classroom
     private ?string $level = null;
 
     /**
-     * @var Collection<int, User>
-     */
-    #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'classeID')]
-    private Collection $users;
-
-    /**
      * @var Collection<int, Subject>
      */
     #[ORM\ManyToMany(targetEntity: Subject::class, inversedBy: 'classrooms')]
     private Collection $subjectID;
 
+    /**
+     * @var Collection<int, User>
+     */
+    #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'classeID')]
+    private Collection $users;
+
     public function __construct()
     {
-        $this->users = new ArrayCollection();
         $this->subjectID = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -69,6 +69,30 @@ class Classroom
     }
 
     /**
+     * @return Collection<int, Subject>
+     */
+    public function getSubjectID(): Collection
+    {
+        return $this->subjectID;
+    }
+
+    public function addSubjectID(Subject $subjectID): static
+    {
+        if (!$this->subjectID->contains($subjectID)) {
+            $this->subjectID->add($subjectID);
+        }
+
+        return $this;
+    }
+
+    public function removeSubjectID(Subject $subjectID): static
+    {
+        $this->subjectID->removeElement($subjectID);
+
+        return $this;
+    }
+
+    /**
      * @return Collection<int, User>
      */
     public function getUsers(): Collection
@@ -94,30 +118,6 @@ class Classroom
                 $user->setClasseID(null);
             }
         }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Subject>
-     */
-    public function getSubjectID(): Collection
-    {
-        return $this->subjectID;
-    }
-
-    public function addSubjectID(Subject $subjectID): static
-    {
-        if (!$this->subjectID->contains($subjectID)) {
-            $this->subjectID->add($subjectID);
-        }
-
-        return $this;
-    }
-
-    public function removeSubjectID(Subject $subjectID): static
-    {
-        $this->subjectID->removeElement($subjectID);
 
         return $this;
     }
