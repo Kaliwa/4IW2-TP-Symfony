@@ -44,3 +44,68 @@ Brancher ChatGPT pour simplfier la rédaction de contenu pour vos entités
 Faire un système de notifications
 Faire du temps réel avec Mercure
 Faire de l'async avec RabbitMQ
+
+```uml
+@startuml
+
+entity "users" as users {
+  +id : int
+  email : string
+  password : string
+  prenom : string
+  nom : string
+  roles : string
+  classe_id : int
+}
+
+entity "classroom" as classroom {
+  +id : int
+  nom : string
+  niveau : string
+}
+
+entity "subject" as subject {
+  +id : int
+  nom : string
+  description : string
+}
+
+entity "classroom_subject" as classroom_subject {
+  +id : int
+  matiere_id : int
+  classe_id : int
+}
+
+entity "chapter" as chapter {
+  +id : int
+  titre : string
+  description : string
+  matiere_id : int
+}
+
+entity "exercise" as exercise {
+  +id : int
+  question : string
+  reponse : string
+  chapitre_id : int
+}
+
+entity "comment" as comment {
+  +id : int
+  contenu : string
+  user_id : int
+  exercice_id : int
+  created_at : datetime
+}
+
+' Relationships
+users -- classroom : "1..n"
+subject -- chapter : "1..n"
+chapter -- exercise : "1..n"
+exercise -- comment : "1..n"
+users -- comment : "1..n"
+classroom_subject -- subject : "n..1"
+classroom_subject -- classroom : "n..1"
+
+@enduml
+```
