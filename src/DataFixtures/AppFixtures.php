@@ -52,10 +52,26 @@ class AppFixtures extends Fixture
                 $user->setPassword(password_hash($faker->password, PASSWORD_BCRYPT));
                 $user->setClasseID($classroom);
                 $users[] = $user;
-                $manager->persist($user);
+                $manager->persist(object: $user);
             }
         }
-    }
+            $roles = ['ROLE_ADMIN', 'ROLE_USER', 'ROLE_BANNED'];
+            foreach ($roles as $i => $role) {
+                $user = new User();
+                $user->setFirstName("John")
+                    ->setLastName("Doe")
+                    ->setUsername("johndoe" . $i)
+                    ->setEmail("john+$i@doe.com")
+                    ->setRoles([$role]);
+        
+                $hashedPassword = password_hash("0000", PASSWORD_BCRYPT);
+                $user->setPassword($hashedPassword);
+        
+                $user->setClasseID($classroom);
+        
+                $manager->persist($user);
+            }
+            }
 
     protected function createSubjects(ObjectManager $manager, array &$subjects, $faker): void
     {

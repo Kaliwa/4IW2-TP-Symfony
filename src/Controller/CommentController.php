@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
 
-class CommentController extends AbstractController
+class CommentController extends BaseController
 {
     #[Route('/comment', name: 'app_comment')]
     public function index(): JsonResponse
