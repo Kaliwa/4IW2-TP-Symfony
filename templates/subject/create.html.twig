@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Create a New Exercise{% endblock %}
+
+{% block body %}
+    <div class="container mx-auto p-6">
+        <h1 class="text-3xl font-bold text-center mb-6">Create a New Exercise</h1>
+
+        <div class="bg-white shadow-lg rounded-lg p-6">
+            {{ form_start(form) }}
+                <div class="mb-4">
+                    {{ form_label(form.name, null, {'attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+                    {{ form_widget(form.name, {'attr': {'class': 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'}}) }}
+                </div>
+
+                <div class="mb-4">
+                    {{ form_label(form.description, null, {'attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+                    {{ form_widget(form.description, {'attr': {'class': 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'}}) }}
+                </div>
+
+                <div class="mb-4">
+                    {{ form_label(form.classrooms, null, {'attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+                    {{ form_widget(form.classrooms, {'attr': {'class': 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'}}) }}
+                </div>
+
+            {{ form_end(form) }}
+        </div>
+
+        <a href="{{ path('exercise_list') }}" class="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400 mt-4 inline-block">Back to list</a>
+    </div>
+{% endblock %}

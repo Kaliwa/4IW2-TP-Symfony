@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer une classe{% endblock %}
+
+{% block body %}
+<h1>Créer une classe</h1>
+
+{{ form_start(form) }}
+    {{ form_row(form.name) }}
+    {{ form_row(form.level) }}
+    <button class="btn btn-primary">Créer</button>
+{{ form_end(form) }}
+
+<a href="{{ path('classroom_list') }}" class="btn btn-secondary mt-3">Retour à la liste</a>
+{% endblock %}

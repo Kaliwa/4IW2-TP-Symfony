@@ -22,21 +22,22 @@ class Classroom
     private ?string $level = null;
 
     /**
+     * @var Collection<int, User>
+     */
+    #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'classeID', orphanRemoval: true)]
+    private Collection $users;
+
+
+    /**
      * @var Collection<int, Subject>
      */
     #[ORM\ManyToMany(targetEntity: Subject::class, inversedBy: 'classrooms')]
-    private Collection $subjectID;
-
-    /**
-     * @var Collection<int, User>
-     */
-    #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'classeID')]
-    private Collection $users;
+    private Collection $subjects;
 
     public function __construct()
     {
-        $this->subjectID = new ArrayCollection();
         $this->users = new ArrayCollection();
+        $this->subjects = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -69,30 +70,6 @@ class Classroom
     }
 
     /**
-     * @return Collection<int, Subject>
-     */
-    public function getSubjectID(): Collection
-    {
-        return $this->subjectID;
-    }
-
-    public function addSubjectID(Subject $subjectID): static
-    {
-        if (!$this->subjectID->contains($subjectID)) {
-            $this->subjectID->add($subjectID);
-        }
-
-        return $this;
-    }
-
-    public function removeSubjectID(Subject $subjectID): static
-    {
-        $this->subjectID->removeElement($subjectID);
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, User>
      */
     public function getUsers(): Collection
@@ -113,11 +90,35 @@ class Classroom
     public function removeUser(User $user): static
     {
         if ($this->users->removeElement($user)) {
-            // set the owning side to null (unless already changed)
+            // Set the owning side to null (unless already changed)
             if ($user->getClasseID() === $this) {
                 $user->setClasseID(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Subject>
+     */
+    public function getSubjectID(): Collection
+    {
+        return $this->subjects;
+    }
+
+    public function addSubjectID(Subject $subject): static
+    {
+        if (!$this->subjects->contains($subject)) {
+            $this->subjects->add($subject);
+        }
+
+        return $this;
+    }
+
+    public function removeSubjectID(Subject $subject): static
+    {
+        $this->subjects->removeElement($subject);
 
         return $this;
     }

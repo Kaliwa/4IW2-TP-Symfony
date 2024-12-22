@@ -8,6 +8,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Controller\BaseController;
+use App\Entity\Classroom;
 
 class HomeController extends BaseController
 {
@@ -19,15 +20,19 @@ class HomeController extends BaseController
             return $redirect;
         }
 
-        // $user = new \App\Entity\User();
-        // $user->setFirstName(firstname: "john");
-        // $user->setLastName("doe");
-        // $user->setUsername("john_doe");
-        // $user->setEmail("john@doe.com");
-        // $user->setRoles(["ROLE_USER"]);
-        // $user->setPassword($hasher->hashPassword($user, "j"));
-        // $em->persist($user);
-        // $em->flush();
-        return $this->render(view: 'home/index.html.twig');
+        $classroom = $this->getUser()->getClasseID();
+
+        if ($this->isGranted('ROLE_ADMIN')) {
+            $classrooms = $em->getRepository(Classroom::class)->findAll();
+        } else {
+            $classrooms = $em->getRepository(Classroom::class)->findBy([
+                'id' => $classroom->getId(),
+            ]);
+        }
+
+        return $this->render('home/index.html.twig', [
+            'classrooms' => $classrooms,
+            'classroom' => $classroom,
+        ]);
     }
 }

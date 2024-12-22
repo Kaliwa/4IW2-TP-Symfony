@@ -25,7 +25,6 @@ class Comment
     private ?User $userID = null;
 
     #[ORM\ManyToOne(inversedBy: 'comments')]
-    
     private ?Exercise $exerciseID = null;
 
     public function getId(): ?int

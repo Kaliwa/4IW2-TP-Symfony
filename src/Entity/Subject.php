@@ -25,13 +25,13 @@ class Subject
     /**
      * @var Collection<int, Chapter>
      */
-    #[ORM\OneToMany(targetEntity: Chapter::class, mappedBy: 'subjectID')]
+    #[ORM\OneToMany(targetEntity: Chapter::class, mappedBy: 'subject')]
     private Collection $chapters;
 
     /**
      * @var Collection<int, Classroom>
      */
-    #[ORM\ManyToMany(targetEntity: Classroom::class, mappedBy: 'subjectID')]
+    #[ORM\ManyToMany(targetEntity: Classroom::class, mappedBy: 'subjects')]
     private Collection $classrooms;
 
     public function __construct()

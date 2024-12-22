@@ -23,13 +23,13 @@ class Chapter
     private ?string $description = null;
 
     #[ORM\ManyToOne(inversedBy: 'chapters')]
-    
-    private ?Subject $subjectID = null;
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
+    private ?Subject $subject = null;
 
     /**
      * @var Collection<int, Exercise>
      */
-    #[ORM\OneToMany(targetEntity: Exercise::class, mappedBy: 'chapterID')]
+    #[ORM\OneToMany(targetEntity: Exercise::class, mappedBy: 'chapterID', cascade: ['remove'])]
     private Collection $exercises;
 
     public function __construct()
@@ -68,12 +68,12 @@ class Chapter
 
     public function getSubjectID(): ?Subject
     {
-        return $this->subjectID;
+        return $this->subject;
     }
 
-    public function setSubjectID(?Subject $subjectID): static
+    public function setSubjectID(?Subject $subject): static
     {
-        $this->subjectID = $subjectID;
+        $this->subject = $subject;
 
         return $this;
     }
@@ -99,7 +99,6 @@ class Chapter
     public function removeExercise(Exercise $exercise): static
     {
         if ($this->exercises->removeElement($exercise)) {
-            // set the owning side to null (unless already changed)
             if ($exercise->getChapterID() === $this) {
                 $exercise->setChapterID(null);
             }

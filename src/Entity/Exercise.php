@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Entity;
 
 use App\Repository\ExerciseRepository;
@@ -22,14 +21,15 @@ class Exercise
     #[ORM\Column(type: Types::TEXT)]
     private ?string $response = null;
 
-    #[ORM\ManyToOne(inversedBy: 'exercises')]
-    
+    #[ORM\ManyToOne(targetEntity: Chapter::class, inversedBy: 'exercises')]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')] 
     private ?Chapter $chapterID = null;
 
     /**
      * @var Collection<int, Comment>
      */
     #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'exerciseID')]
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
     private Collection $comments;
 
     public function __construct()

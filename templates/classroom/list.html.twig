@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des classes{% endblock %}
+
+{% block body %}
+<h1>Liste des classes</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Niveau</th>
+            <th>Sujets</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for classroom in classrooms %}
+            <tr>
+                <td>{{ classroom.name }}</td>
+                <td>{{ classroom.level }}</td>
+                <td>
+                    {% for subject in classroom.subjectID %}
+                        {{ subject.name }}{% if not loop.last %}, {% endif %}
+                    {% endfor %}
+                </td>
+                <td>
+                    <a href="{{ path('classroom_edit', { id: classroom.id }) }}" class="btn btn-warning btn-sm">Modifier</a>
+                    <form method="post" action="{{ path('classroom_delete', { id: classroom.id }) }}" style="display: inline-block;" onsubmit="return confirm('Êtes-vous sûr ?');">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ classroom.id) }}">
+                        <button class="btn btn-danger btn-sm">Supprimer</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{{ path('classroom_create') }}" class="btn btn-success mt-3">Ajouter une nouvelle classe</a>
+{% endblock %}

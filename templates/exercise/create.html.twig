@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Create a New Exercise{% endblock %}
+
+{% block body %}
+    <div class="max-w-4xl mx-auto mt-10 px-4 py-6 bg-white shadow-md rounded-lg">
+        <h1 class="text-3xl font-semibold text-gray-800 mb-6">Create a New Exercise</h1>
+
+        {{ form_start(form) }}
+        
+        <div class="mb-4">
+            <label for="exercise_question" class="block text-gray-700 font-medium">Question</label>
+            {{ form_widget(form.question, {'attr': {'class': 'mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500'}}) }}
+            <div class="text-red-500 text-sm">
+                {{ form_errors(form.question) }}
+            </div>
+        </div>
+
+        <div class="mb-4">
+            <label for="exercise_response" class="block text-gray-700 font-medium">Response</label>
+            {{ form_widget(form.response, {'attr': {'class': 'mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500'}}) }}
+            <div class="text-red-500 text-sm">
+                {{ form_errors(form.response) }}
+            </div>
+        </div>
+
+        <div class="mb-4">
+            <label for="exercise_chapter" class="block text-gray-700 font-medium">Chapitre</label>
+            {{ form_widget(form.chapterID, {'attr': {'class': 'mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500'}}) }}
+            <div class="text-red-500 text-sm">
+                {{ form_errors(form.chapterID) }}
+            </div>
+        </div>
+
+        <div class="flex items-center justify-between">
+            <button type="submit" class="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Create Exercise</button>
+            <a href="{{ path('exercise_list') }}" class="px-6 py-3 bg-gray-500 text-white font-medium rounded-lg hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">Back to List</a>
+        </div>
+
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

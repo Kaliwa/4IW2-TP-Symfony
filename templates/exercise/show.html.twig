@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Exercise Details{% endblock %}
+
+{% block body %}
+    <h1>Exercise Details</h1>
+
+    <div class="exercise-details">
+        <h2>{{ exercise.question }}</h2>
+        <p><strong>Description:</strong> {{ exercise.response }}</p>
+        
+        <hr>
+
+        <a href="{{ path('exercise_edit', {'id': exercise.id}) }}" class="btn btn-warning">Edit Exercise</a>
+        <a href="{{ path('exercise_list') }}" class="btn btn-secondary">Back to list</a>
+    </div>
+{% endblock %}

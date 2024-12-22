@@ -45,6 +45,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $lastname = null;
 
     #[ORM\ManyToOne(inversedBy: 'users')]
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
     private ?Classroom $classeID = null;
 
     #[ORM\Column]

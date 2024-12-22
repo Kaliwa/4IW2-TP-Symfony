@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Chapter Details{% endblock %}
+
+{% block body %}
+    <h1>Chapter: {{ chapter.title }}</h1>
+    <p><strong>Description:</strong> {{ chapter.description }}</p>
+
+    <h3>Exercises</h3>
+    {% if chapter.exercises is not empty %}
+        <ul>
+            {% for exercise in chapter.exercises %}
+                <li>{{ exercise.question }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No exercises found for this chapter.</p>
+    {% endif %}
+
+    <a href="{{ path('chapter_edit', {'id': chapter.id}) }}" class="btn btn-warning">Edit Chapter</a>
+    <a href="{{ path('chapter_list') }}" class="btn btn-secondary">Back to Chapter List</a>
+{% endblock %}
