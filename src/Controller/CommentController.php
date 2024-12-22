@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class CommentController extends AbstractController
 {
@@ -40,6 +41,7 @@ class CommentController extends AbstractController
         ]);
     }
 
+    #[IsGranted("ROLE_ADMIN")]
     #[Route('/comment/edit/{id}', name: 'comment_edit')]
     public function edit(Comment $comment, Request $request, EntityManagerInterface $em): Response
     {
@@ -56,6 +58,7 @@ class CommentController extends AbstractController
         ]);
     }
 
+    #[IsGranted("ROLE_ADMIN")]
     #[Route('/comment/delete/{id}', name: 'comment_delete')]
     public function delete(Comment $comment, EntityManagerInterface $em): Response
     {

@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Subject List{% endblock %}
+{% block title %}Liste des matières{% endblock %}
 
 {% block body %}
     <div class="container mx-auto p-6">
-        <h1 class="text-3xl font-bold text-center mb-6">Subject List</h1>
-
-        <a href="{{ path('subject_create') }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mb-4 inline-block">Create New Subject</a>
-
+        <h1 class="text-3xl font-bold text-center mb-6">Liste des matières</h1>
+        {% if is_granted('ROLE_ADMIN') %}    
+            <a href="{{ path('subject_create') }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mb-4 inline-block">Nouvelle matière</a>
+        {% endif %}
         <div class="overflow-x-auto bg-white shadow-lg rounded-lg">
             <table class="table-auto w-full text-left border-collapse">
                 <thead class="bg-gray-100">
@@ -24,18 +24,20 @@
                             <td class="py-2 px-4 border-b">{{ subject.id }}</td>
                             <td class="py-2 px-4 border-b">{{ subject.name }}</td>
                             <td class="py-2 px-4 border-b">{{ subject.description }}</td>
+
                             <td class="py-2 px-4 border-b space-x-2">
-                                <a href="{{ path('subject_show', { id: subject.id }) }}" class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">View</a>
-                                <a href="{{ path('subject_edit', { id: subject.id }) }}" class="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600">Edit</a>
+                                <a href="{{ path('subject_show', { id: subject.id }) }}" class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">Voir</a>
+                                {% if is_granted('ROLE_ADMIN') %}    
+                                <a href="{{ path('subject_edit', { id: subject.id }) }}" class="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600">Modifier</a>
                                 <form action="{{ path('subject_delete', { id: subject.id }) }}" method="post" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this item?');">
-                                    {{ csrf_token('delete' ~ subject.id) | raw }}
-                                    <button type="submit" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Delete</button>
+                                    <button type="submit" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Supprimer</button>
                                 </form>
                             </td>
+                        {% endif %}
                         </tr>
                     {% else %}
                         <tr>
-                            <td colspan="4" class="text-center py-4">No subjects found.</td>
+                            <td colspan="4" class="text-center py-4">Aucune matière trouvée.</td>
                         </tr>
                     {% endfor %}
                 </tbody>

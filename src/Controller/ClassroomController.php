@@ -9,18 +9,44 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class ClassroomController extends AbstractController
 {
     #[Route('/classroom', name: 'classroom_list')]
     public function list(EntityManagerInterface $em): Response
     {
-        $classrooms = $em->getRepository(Classroom::class)->findAll();
+
+        $classroom = $this->getUser()->getClasseID();
+
+        if ($this->isGranted('ROLE_ADMIN')) {
+            $classrooms = $em->getRepository(Classroom::class)->findAll();
+        } else {
+            $classrooms = $em->getRepository(Classroom::class)->findBy([
+                'id' => $classroom->getId(),
+            ]);
+        }
+
         return $this->render('classroom/list.html.twig', [
             'classrooms' => $classrooms,
         ]);
     }
 
+    #[Route('/classroom/{id}', name: 'classroom_show', requirements: ['id' => '\d+'])]
+    public function show(int $id, EntityManagerInterface $em): Response
+    {
+        $classroom = $em->getRepository(Classroom::class)->findOneBy(['id' => $id]);
+    
+        if (!$classroom) {
+            throw $this->createNotFoundException('Classroom not found');
+        }
+    
+        return $this->render('classroom/show.html.twig', [
+            'classroom' => $classroom,
+        ]);
+    }
+
+    #[IsGranted("ROLE_ADMIN")]
     #[Route('/classroom/create', name: 'classroom_create')]
     public function create(Request $request, EntityManagerInterface $em): Response
     {
@@ -40,6 +66,7 @@ class ClassroomController extends AbstractController
         ]);
     }
 
+    #[IsGranted("ROLE_ADMIN")]
     #[Route('/classroom/edit/{id}', name: 'classroom_edit')]
     public function edit(Classroom $classroom, Request $request, EntityManagerInterface $em): Response
     {
@@ -56,6 +83,7 @@ class ClassroomController extends AbstractController
         ]);
     }
 
+    #[IsGranted("ROLE_ADMIN")]
     #[Route('/classroom/delete/{id}', name: 'classroom_delete')]
     public function delete(Classroom $classroom, EntityManagerInterface $em): Response
     {

@@ -37,10 +37,6 @@ class ClassroomType extends AbstractType
                     '9' => '9',
                 ],
                 'attr' => ['class' => 'form-control'],
-            ])
-            ->add('save', SubmitType::class, [
-                'label' => 'Save Classroom',
-                'attr' => ['class' => 'btn btn-success'],
             ]);
     }
 

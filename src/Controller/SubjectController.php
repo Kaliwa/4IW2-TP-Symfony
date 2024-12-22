@@ -3,12 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Subject;
+use App\Entity\Classroom;
 use App\Form\SubjectType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class SubjectController extends AbstractController
 {
@@ -24,18 +26,30 @@ class SubjectController extends AbstractController
     #[Route('/subject/{id}', name: 'subject_show', requirements: ['id' => '\d+'])]
     public function show(int $id, EntityManagerInterface $em): Response
     {
-        $subject = $em->getRepository(Subject::class)->findOneBy(['id' => $id]);
+        $classroom = $em->getRepository(Classroom::class)->findOneBy(['id' => $id]);
+
+        if (!$classroom) {
+            throw $this->createNotFoundException('Classroom not found');
+        }
     
-        if (!$subject) {
-            throw $this->createNotFoundException('Subject not found');
+        $subjects = $em->getRepository(Subject::class)->createQueryBuilder('s')
+            ->join('s.classrooms', 'c')
+            ->where('c.id = :classroom_id')
+            ->setParameter('classroom_id', $id)
+            ->getQuery()
+            ->getResult();
+    
+        if (empty($subjects)) {
+            throw $this->createNotFoundException('No subjects found for this classroom');
         }
     
         return $this->render('subject/show.html.twig', [
-            'subject' => $subject,
+            'subjects' => $subjects,
         ]);
+    
     }
         
-
+    #[IsGranted("ROLE_ADMIN")]
     #[Route('/subject/create', name: 'subject_create')]
     public function create(Request $request, EntityManagerInterface $em): Response
     {
@@ -55,6 +69,7 @@ class SubjectController extends AbstractController
         ]);
     }
 
+    #[IsGranted("ROLE_ADMIN")]
     #[Route('/subject/edit/{id}', name: 'subject_edit')]
     public function edit(Subject $subject, Request $request, EntityManagerInterface $em): Response
     {
@@ -71,6 +86,7 @@ class SubjectController extends AbstractController
         ]);
     }
 
+    #[IsGranted("ROLE_ADMIN")]
     #[Route('/subject/delete/{id}', name: 'subject_delete')]
     public function delete(Subject $subject, EntityManagerInterface $em): Response
     {

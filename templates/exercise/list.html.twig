@@ -1,35 +1,49 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Exercise List{% endblock %}
+{% block title %}Liste des exercices{% endblock %}
 
 {% block body %}
-    <h1>Exercise List</h1>
-
-    <a href="{{ path('exercise_create') }}" class="btn btn-success mb-3">Create New Exercise</a>
+<div class="max-w-6xl mx-auto mt-10">
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-2xl font-bold text-gray-800">Liste des exercices</h1>
+        {% if is_granted('ROLE_ADMIN') %}
+            <a href="{{ path('exercise_create') }}" class="bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 focus:outline-none">
+                Créer un nouvel exercice
+            </a>
+        {% endif %}
+    </div>
 
     {% if exercises is not empty %}
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Question</th>
-                    <th>Response</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for exercise in exercises %}
+        <div class="overflow-x-auto bg-white shadow-md rounded-lg">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
                     <tr>
-                        <td>{{ exercise.question }}</td>
-                        <td>{{ exercise.response }}</td>
-                        <td>
-                            <a href="{{ path('exercise_edit', {'id': exercise.id}) }}" class="btn btn-warning btn-sm">Edit</a>
-                            <a href="{{ path('exercise_delete', {'id': exercise.id}) }}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this exercise?');">Delete</a>
-                        </td>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Question</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Réponse</th>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                        {% endif %}
                     </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    {% for exercise in exercises %}
+                        <tr>
+                            <td class="px-6 py-4 text-sm text-gray-700">{{ exercise.question }}</td>
+                            <td class="px-6 py-4 text-sm text-gray-700">{{ exercise.response }}</td>
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <td class="px-6 py-4 text-right">
+                                    <a href="{{ path('exercise_edit', {'id': exercise.id}) }}" class="text-yellow-600 hover:underline">Modifier</a>
+                                    <a href="{{ path('exercise_delete', {'id': exercise.id}) }}" class="text-red-600 hover:underline ml-4"
+                                    onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet exercice ?');">Supprimer</a>
+                                </td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     {% else %}
-        <p>No exercises found.</p>
+        <p class="text-gray-700 mt-6">Aucun exercice trouvé.</p>
     {% endif %}
+</div>
 {% endblock %}

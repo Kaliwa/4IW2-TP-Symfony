@@ -16,17 +16,28 @@ class ExerciseType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('question', TextareaType::class)
-            ->add('response', TextareaType::class)
-            ->add('chapterID', EntityType::class, [   // Correction ici : 'chapter' au lieu de 'chapterID'
+            ->add('question', TextareaType::class, [
+                'attr' => [
+                    'class' => 'mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500',
+                    'placeholder' => 'Entrez la question',
+                ],
+                'label' => 'Question',
+            ])
+            ->add('response', TextareaType::class, [
+                'attr' => [
+                    'class' => 'mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500',
+                    'placeholder' => 'Entrez la réponse',
+                ],
+                'label' => 'Réponse',
+            ])
+            ->add('chapterID', EntityType::class, [
                 'class' => Chapter::class,
                 'choice_label' => 'title',
-                'label' => 'Chapter',
+                'label' => 'Chapitre',
                 'required' => true,
-            ])
-            ->add('save', SubmitType::class, [
-                'label' => 'Save exercise',
-                'attr' => ['class' => 'btn btn-success'],
+                'attr' => [
+                    'class' => 'mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500',
+                ],
             ]);
     }
 

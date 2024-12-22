@@ -1,9 +1,8 @@
 <?php
-// src/Form/ChapterType.php
+
 namespace App\Form;
 
 use App\Entity\Chapter;
-use App\Entity\Exercise;
 use App\Entity\Subject;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -21,20 +20,25 @@ class ChapterType extends AbstractType
             ->add('title', TextType::class, [
                 'label' => 'Chapter Title',
                 'required' => true,
+                'attr' => [
+                    'class' => 'w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500'
+                ]
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'Chapter Content',
                 'required' => false,
+                'attr' => [
+                    'class' => 'w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500'
+                ]
             ])
             ->add('subjectID', EntityType::class, [
                 'class' => Subject::class,
                 'choice_label' => 'name',
                 'label' => 'Subject',
                 'required' => true,
-            ])
-            ->add('save', SubmitType::class, [
-                'label' => 'Save chapter',
-                'attr' => ['class' => 'btn btn-success'],
+                'attr' => [
+                    'class' => 'w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500'
+                ]
             ]);
     }
 

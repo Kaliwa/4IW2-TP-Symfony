@@ -1,1 +1,59 @@
-Profil
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil de {{ app.user.username }}{% endblock %}
+
+{% block body %}
+<div class="container mx-auto p-6">
+    <div class="bg-white shadow-md rounded-lg p-6 max-w-4xl mx-auto">
+        <!-- Header Section -->
+        <div class="flex items-center space-x-4">
+            <div class="profile-image-container">
+                {% if app.user and app.user.profileImage %}
+                    <img class="w-32 h-32 rounded-full border-2 border-gray-300 object-cover"
+                        src="{{ asset('images/' ~ app.user.profileImage) }}"
+                        alt="Image de profil de {{ app.user.username }}">
+                {% else %}
+                    <img class="w-32 h-32 rounded-full border-2 border-gray-300 object-cover"
+                        src="{{ asset('images/profile-placeholder.jpg') }}"
+                        alt="Image de profil par défaut">
+                {% endif %}
+            </div>
+            <div>
+                <h1 class="text-3xl font-bold">{{ app.user.firstName }} {{ app.user.lastName }}</h1>
+                <p class="text-gray-600">@{{ app.user.username }}</p>
+            </div>
+        </div>
+
+        <div class="mt-6">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4">Informations personnelles</h2>
+            <ul class="space-y-2">
+                <li>
+                    <span class="font-semibold">Nom complet :</span> {{ app.user.firstName }} {{ app.user.lastName }}
+                </li>
+                <li>
+                    <span class="font-semibold">Nom d'utilisateur :</span> {{ app.user.username }}
+                </li>
+                <li>
+                    <span class="font-semibold">Adresse email :</span> {{ app.user.email }}
+                </li>
+                <li>
+                    <span class="font-semibold">Rôle :</span> {{ app.user.roles|join(', ') }}
+                </li>
+                <li>
+                    <span class="font-semibold">Classe :</span> {{ app.user.classeID.name ?? 'Non attribué' }}
+                </li>
+            </ul>
+        </div>
+
+        <!-- Action Section -->
+        <div class="mt-6 flex justify-end space-x-4">
+            <a href="{{ path('user_edit', {'id': app.user.id}) }}" class="bg-indigo-500 text-white py-2 px-4 rounded hover:bg-indigo-600">
+                Modifier le profil
+            </a>
+            <a href="{{ path('app_home') }}" class="bg-gray-300 text-black py-2 px-4 rounded hover:bg-gray-400">
+                Retour au tableau de bord
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

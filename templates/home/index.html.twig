@@ -4,53 +4,51 @@
 
 {% block body %}
     {% if app.user %}
-        <div class="flex flex-col items-center justify-center min-h-screen bg-gray-100 py-10 px-6">
-            <div class="bg-white shadow-lg rounded-lg p-8 max-w-md w-full">
-                <h1 class="text-2xl font-bold text-gray-800 mb-4 text-center">User Information</h1>
+        <div class="flex flex-col md:flex-row items-start justify-center min-h-screen bg-gray-100 py-10 px-6">
+            <!-- Première colonne : Infos utilisateur -->
+            <div class="bg-white shadow-lg rounded-lg p-8 max-w-md w-full mb-6 md:mb-0 md:mr-6">
+                <h1 class="text-2xl font-bold text-gray-800 mb-6 text-center">Information de l'utilisateur</h1>
 
-                <div class="text-gray-700 space-y-2">
-                    <p><span class="font-medium">First Name:</span> {{ app.user.firstname }}</p>
-                    <p><span class="font-medium">Last Name:</span> {{ app.user.lastname }}</p>
-                    <p><span class="font-medium">Username:</span> {{ app.user.username }}</p>
-                    <p><span class="font-medium">Email:</span> {{ app.user.email }}</p>
-                    <p><span class="font-medium">Classe:</span> {{ classroom.name }}</p>
+                <div class="text-gray-700 space-y-4">
+                    <p><span class="font-medium text-gray-900">Prénom :</span> {{ app.user.firstname }}</p>
+                    <p><span class="font-medium text-gray-900">Nom de famille:</span> {{ app.user.lastname }}</p>
+                    <p><span class="font-medium text-gray-900">Nom d'utilisateur :</span> {{ app.user.username }}</p>
+                    <p><span class="font-medium text-gray-900">Email :</span> {{ app.user.email }}</p>
+                    <p><span class="font-medium text-gray-900">Classe :</span> {{ classroom.name }}</p>
                 </div>
-                {% if is_granted('ROLE_ADMIN') %}
-                    <div class="mt-6 text-center">
-                        <a href="{{ path('app_admin') }}" class="bg-red-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400">
-                            Admin
-                        </a>
-                    </div>
-                    <h2 class="text-xl font-semibold mt-6">All Classrooms</h2>
-                        <div class="mt-4">
-                            {% if classrooms is not empty %}
-                                <ul class="space-y-2">
-                                    {% for classroom in classrooms %}
-                                        <li>{{ classroom.name }}</li>
-                                    {% endfor %}
-                                </ul>
-                            {% else %}
-                                <p>No classrooms found.</p>
-                            {% endif %}
-                        </div>
 
-                {% endif %}
                 {% if is_granted('ROLE_USER') %}
-                    <div class="flex justify-center gap-12 mt-6 text-center">
-                        <a href="{{ path('app_profile') }}" class="bg-red-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    <div class="flex justify-center gap-6 mt-8 text-center">
+                        <a href="{{ path('app_profile') }}" class="bg-red-500 text-white px-6 py-3 rounded-lg shadow hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400">
                             Profil
                         </a>
-                        <a href="{{ path('classroom_list') }}" class="bg-green-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                        <a href="{{ path('classroom_show', {'id': classroom.id}) }}" class="bg-green-500 text-white px-6 py-3 rounded-lg shadow hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400">
                             Classe
                         </a>
                     </div>
                 {% endif %}
+
                 <div class="mt-6 text-center">
-                    <a href="{{ path('app_logout') }}" class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    <a href="{{ path('app_logout') }}" class="bg-blue-500 text-white px-6 py-3 rounded-lg shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400">
                         Logout
                     </a>
                 </div>
             </div>
+
+            <!-- Deuxième colonne : Liens supplémentaires pour l'admin -->
+            {% if is_granted('ROLE_ADMIN') %}
+                <div class="bg-white shadow-lg rounded-lg p-8 w-full max-w-md">
+                    <h2 class="text-xl font-bold text-gray-800 mb-6 text-center">Liens Administration</h2>
+                    <div class="space-y-4">
+                        <a href="{{ path('user_list') }}" class="text-blue-600 hover:text-blue-800 font-medium text-lg block">Liste des utilisateurs</a>
+                        <a href="{{ path('classroom_list') }}" class="text-blue-600 hover:text-blue-800 font-medium text-lg block">Liste des classes</a>
+                        <a href="{{ path('subject_list') }}" class="text-blue-600 hover:text-blue-800 font-medium text-lg block">Liste des sujets</a>
+                        <a href="{{ path('chapter_list') }}" class="text-blue-600 hover:text-blue-800 font-medium text-lg block">Liste des chapitres</a>
+                        <a href="{{ path('exercise_list') }}" class="text-blue-600 hover:text-blue-800 font-medium text-lg block">Liste des exercices</a>
+                        <a href="{{ path('comment_list') }}" class="text-blue-600 hover:text-blue-800 font-medium text-lg block">Liste des commentaires</a>
+                    </div>
+                </div>
+            {% endif %}
         </div>
     {% endif %}
 {% endblock %}

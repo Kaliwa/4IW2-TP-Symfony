@@ -20,26 +20,31 @@ class AppFixtures extends Fixture
         $subjects = [];
         $chapters = [];
         $faker = Factory::create();
-        $this->createClassrooms($manager, $classrooms, $faker);
-        $this->createUsers($manager, $classrooms, $users, $faker);
         $this->createSubjects($manager, $subjects, $faker);
+        $this->createClassrooms($manager, $classrooms, $subjects, $faker);
+        $this->createUsers($manager, $classrooms, $users, $faker);
         $this->createChapters($manager, $subjects,  $chapters, $faker);
         $this->createExercises($manager, $chapters, $faker);
         $manager->flush();
     }
 
     
-    protected function createClassrooms(ObjectManager $manager, array &$classrooms, $faker): void
+    protected function createClassrooms(ObjectManager $manager, array &$classrooms, array &$subjects, $faker): void
     {
         for ($l = 0; $l < 10; $l++) {
             $class = new Classroom();
-            $class->setLevel((string) $l);
+            $class->setLevel((string )$l . "th Grade");
             $class->setName($faker->text(10));
             $classrooms[] = $class;
             $manager->persist($class);
+    
+            for ($i = 0; $i < rand(2, 4); $i++) {
+                $subject = $faker->randomElement($subjects);
+                $class->addSubjectID($subject);
+            }
         }
     }
-
+        
     protected function createUsers(ObjectManager $manager, array &$classrooms, array &$users, $faker): void
     {
         foreach ($classrooms as $classroom) {
@@ -73,17 +78,30 @@ class AppFixtures extends Fixture
             }
             }
 
-    protected function createSubjects(ObjectManager $manager, array &$subjects, $faker): void
-    {
-        for ($i = 0; $i < 10; $i++) {
-            $subject = new Subject();
-            $subject->setName($faker->text(10));
-            $subject->setDescription($faker->text(100));
-            $subjects[] = $subject;
-            $manager->persist($subject);
+        protected function createSubjects(ObjectManager $manager, array &$subjects, $faker): void
+        {
+            $subjectNames = [
+                'Mathematics',
+                'History',
+                'Physics',
+                'Chemistry',
+                'Biology',
+                'Literature',
+                'Geography',
+                'Philosophy',
+                'Computer Science',
+                'Art'
+            ];
+        
+            foreach ($subjectNames as $name) {
+                $subject = new Subject();
+                $subject->setName($name);
+                $subject->setDescription($faker->text(100));
+                $subjects[] = $subject;
+                $manager->persist($subject);
+            }
         }
-    }
-
+            
     protected function createChapters(ObjectManager $manager, array &$subjects, array &$chapters, $faker): void
     {
         foreach ($subjects as $subject) {

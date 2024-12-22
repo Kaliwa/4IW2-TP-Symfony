@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class ChapterController extends AbstractController
 {
@@ -34,7 +35,8 @@ class ChapterController extends AbstractController
             'chapter' => $chapter,
         ]);
     }
-
+    
+    #[IsGranted("ROLE_ADMIN")]
     #[Route('/chapter/create', name: 'chapter_create')]
     public function create(Request $request, EntityManagerInterface $em): Response
     {
@@ -54,6 +56,7 @@ class ChapterController extends AbstractController
         ]);
     }
 
+    #[IsGranted("ROLE_ADMIN")]
     #[Route('/chapter/edit/{id}', name: 'chapter_edit')]
     public function edit(Chapter $chapter, Request $request, EntityManagerInterface $em): Response
     {
@@ -70,6 +73,7 @@ class ChapterController extends AbstractController
         ]);
     }
 
+    #[IsGranted("ROLE_ADMIN")]
     #[Route('/chapter/delete/{id}', name: 'chapter_delete')]
     public function delete(Chapter $chapter, EntityManagerInterface $em): Response
     {

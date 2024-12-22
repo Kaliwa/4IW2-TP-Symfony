@@ -35,17 +35,12 @@ class SubjectType extends AbstractType
             ->add('classrooms', EntityType::class, [
                 'class' => Classroom::class,
                 'choice_label' => 'name',
-                'label' => 'Classroom',
-                'required' => true,
                 'multiple' => true,
+                'expanded' => true,
+                'label' => 'Classrooms',
+                'required' => true,
                 'attr' => [
-                    'class' => 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
-                ]
-            ])
-            ->add('save', SubmitType::class, [
-                'label' => 'Save Subject',
-                'attr' => [
-                    'class' => 'bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-indigo-500'
+                    'class' => 'form-control flex flex-col'
                 ]
             ]);
     }
