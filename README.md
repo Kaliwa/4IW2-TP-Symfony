@@ -110,6 +110,13 @@ classroom_subject -- classroom : "n..1"
 @enduml
 ```
 
-- Finir le style des templates
-- Faire le CRUD user
-- Conditionner les routes au fait que les CUD sont admin et R non
+- USERS
+  - ADMIN :
+    - USERNAME : johndoe0
+    - PASSWORD : 0000
+  - USER :
+    - USERNAME : johndoe1
+    - PASSWORD : 0000
+  - BANNED :
+    - USERNAME : johndoe2
+    - PASSWORD : 0000
